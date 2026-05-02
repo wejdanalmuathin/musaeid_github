@@ -1,0 +1,82 @@
+import React, { useState } from "react";
+import { View } from "react-native";
+
+import FeaturesScreen from "./FeaturesScreen";
+import MapScreen from "./MapScreen";
+import InspectionScreen from "./InspectionScreen";
+import OrderDetailsScreen from "./OrderDetailsScreen";
+import PaymentScreen from "./PaymentScreen";
+
+import InspectionCompletedScreen from "./InspectionSuccessScreen";
+import InspectionReportScreen from "./InspectionReportScreen";
+import InspectionWarningScreen from "./InspectionWarningScreen";
+
+export default function App() {
+  const [screen, setScreen] = useState("Features");
+
+  const goToFeatures = () => setScreen("Features");
+  const goToMap = () => setScreen("Map");
+  const goToInspection = () => setScreen("Inspection");
+  const goToOrderDetails = () => setScreen("OrderDetails");
+  const goToPayment = () => setScreen("Payment");
+
+  const goToInspectionCompleted = () => setScreen("InspectionCompleted");
+  const goToReport = () => setScreen("Report");
+  const goToWarning = () => setScreen("Warning");
+
+  return (
+    <View style={{ flex: 1 }}>
+
+      {screen === "Features" && (
+        <FeaturesScreen
+          goToMap={goToMap}
+          goToInspection={goToInspection}
+          goToOrderDetails={goToOrderDetails}
+          goToPayment={goToPayment}
+        />
+      )}
+
+      {screen === "Map" && <MapScreen goBack={goToFeatures} />}
+
+      {screen === "OrderDetails" && (
+        <OrderDetailsScreen
+          goBack={goToFeatures}
+          goToWarning={goToWarning}
+        />
+      )}
+
+{screen === "Warning" && (
+  <InspectionWarningScreen 
+    goBack={goToOrderDetails}
+    goToFeatures={goToFeatures}   // ✅ THIS LINE FIXES IT
+  />
+)}
+
+      {screen === "Inspection" && (
+        <InspectionScreen
+          goBack={goToFeatures}
+          goToInspectionCompleted={goToInspectionCompleted}
+        />
+      )}
+
+      {screen === "InspectionCompleted" && (
+        <InspectionCompletedScreen
+          goToReport={goToReport}
+          goToInspection={goToInspection}
+        />
+      )}
+
+      {screen === "Report" && (
+        <InspectionReportScreen
+          goBack={goToFeatures}
+          goToSuccess={goToInspectionCompleted}
+        />
+      )}
+
+      {screen === "Payment" && (
+        <PaymentScreen goBack={goToFeatures} />
+      )}
+
+    </View>
+  );
+}
