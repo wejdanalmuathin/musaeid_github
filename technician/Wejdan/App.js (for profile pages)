@@ -1,0 +1,138 @@
+import React, { useState } from "react";
+import { View } from "react-native";
+
+import ProfileScreen from "./ProfileScreen";
+import EditProfileScreen from "./EditProfileScreen";
+import BankCardsScreen from "./BankCardsScreen";
+import LevelUpgradeScreen from "./LevelUpgradeScreen";
+import NotificationScreen from "./NotificationScreen";
+import MyRatingsScreen from "./MyRatingsScreen";
+import HelpSupportScreen from "./HelpSupportScreen";
+import ContactSupportScreen from "./ContactSupportScreen";
+import TechnicianSupportScreen from "./TechnicianSupportScreen";
+import DocumentsScreen from "./DocumentsScreen";
+import DisputesPaymentsScreen from "./DisputesPaymentsScreen";
+
+export default function App() {
+  const [screen, setScreen] = useState("Profile");
+  const [previousScreen, setPreviousScreen] = useState(null);
+
+  // ✅ 🔥 ADD THIS (GLOBAL USER STATE)
+  const [userData, setUserData] = useState({
+    fullName: "Abdullah Ahmed",
+    email: "abdullah@example.com",
+    phone: "+966 50 123 4567",
+    years: 8,
+    primaryService: "HVAC Maintenance",
+    skills: ["Plumbing", "Electrical"],
+    serviceAreas: {
+      Riyadh: false,
+      Jeddah: false,
+      Dammam: true,
+      Khobar: true,
+    },
+  });
+
+  // ===== NAVIGATION =====
+  const goToProfile = () => setScreen("Profile");
+  const goToEditProfile = () => setScreen("EditProfile");
+  const goToLevelUpgrade = () => setScreen("LevelUpgrade");
+  const goToNotifications = () => setScreen("Notifications");
+  const goToMyRatings = () => setScreen("MyRatings");
+  const goToHelpSupport = () => setScreen("HelpSupport");
+  const goToContactSupport = () => setScreen("ContactSupport");
+  const goToTechnicianSupport = () => setScreen("TechnicianSupport");
+  const goToDocuments = () => setScreen("Documents");
+  const goToDisputesPayments = () => setScreen("DisputesPayments");
+
+  const goToBankCards = () => {
+    setPreviousScreen(screen);
+    setScreen("BankCards");
+  };
+
+  const goBackFromBank = () => {
+    setScreen(previousScreen || "Profile");
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+
+      {/* PROFILE */}
+      {screen === "Profile" && (
+        <ProfileScreen
+          userData={userData} // ✅ PASS DATA
+          goToBankCards={goToBankCards}
+          goToLevelUpgrade={goToLevelUpgrade}
+          goToNotifications={goToNotifications}
+          goToMyRatings={goToMyRatings}
+          goToEditProfile={goToEditProfile}
+          goToHelpSupport={goToHelpSupport}
+          goToContactSupport={goToContactSupport}
+          goToTechnicianSupport={goToTechnicianSupport}
+          goToDocuments={goToDocuments}
+        />
+      )}
+
+      {/* EDIT PROFILE */}
+      {screen === "EditProfile" && (
+        <EditProfileScreen
+          userData={userData}        // ✅ PASS DATA
+          setUserData={setUserData}  // ✅ PASS SETTER
+          goBack={goToProfile}
+        />
+      )}
+
+      {/* BANK CARDS */}
+      {screen === "BankCards" && (
+        <BankCardsScreen goBack={goBackFromBank} />
+      )}
+
+      {/* LEVEL */}
+      {screen === "LevelUpgrade" && (
+        <LevelUpgradeScreen goBack={goToProfile} />
+      )}
+
+      {/* NOTIFICATIONS */}
+      {screen === "Notifications" && (
+        <NotificationScreen goBack={goToProfile} />
+      )}
+
+      {/* RATINGS */}
+      {screen === "MyRatings" && (
+        <MyRatingsScreen goBack={goToProfile} />
+      )}
+
+      {/* HELP */}
+      {screen === "HelpSupport" && (
+        <HelpSupportScreen
+          goBack={goToProfile}
+          goToDisputesPayments={goToDisputesPayments}
+        />
+      )}
+
+      {/* CONTACT */}
+      {screen === "ContactSupport" && (
+        <ContactSupportScreen goBack={goToProfile} />
+      )}
+
+      {/* TECH SUPPORT */}
+      {screen === "TechnicianSupport" && (
+        <TechnicianSupportScreen goBack={goToProfile} />
+      )}
+
+      {/* DOCUMENTS */}
+      {screen === "Documents" && (
+        <DocumentsScreen goBack={goToProfile} />
+      )}
+
+      {/* DISPUTES */}
+      {screen === "DisputesPayments" && (
+        <DisputesPaymentsScreen
+          goBack={goToHelpSupport}
+          goToBankCards={goToBankCards}
+        />
+      )}
+
+    </View>
+  );
+}
