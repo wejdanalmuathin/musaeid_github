@@ -1,0 +1,188 @@
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+
+export default function PaymentScreen({ goBack }) {
+  return (
+    <View style={styles.container}>
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Pressable onPress={goBack}>
+          <MaterialIcons name="arrow-back" size={24} color="#1e1d72" />
+        </Pressable>
+        <Text style={styles.headerTitle}>Payment Status</Text>
+      </View>
+
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
+        {/* SERVICE CARD */}
+        <View style={styles.cardCenter}>
+          <View style={styles.iconCircle}>
+            <MaterialIcons name="account-balance-wallet" size={40} color="#1e1d72" />
+          </View>
+
+          <Text style={styles.title}>Musaeid Service</Text>
+          <Text style={styles.sub}>Job #MS-8829</Text>
+
+          <View style={styles.paidBadge}>
+            <Text style={styles.paidText}>Paid via Wallet</Text>
+          </View>
+        </View>
+
+        {/* SUMMARY */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Order Summary</Text>
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Service Price</Text>
+            <Text>450.00 SAR</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text style={styles.label}>VAT (15%)</Text>
+            <Text>67.50 SAR</Text>
+          </View>
+
+          <View style={styles.totalRow}>
+            <Text style={styles.totalText}>Total Amount</Text>
+            <Text style={styles.totalPrice}>517.50 SAR</Text>
+          </View>
+        </View>
+
+        {/* NOTE */}
+        <View style={styles.note}>
+          <MaterialIcons name="account-balance-wallet" size={22} color="#1e1d72" />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.noteTitle}>Wallet Payment Completed</Text>
+            <Text style={styles.noteText}>
+              The payment has been successfully processed through the user's wallet.
+            </Text>
+          </View>
+        </View>
+
+        {/* BUTTONS */}
+        <Pressable style={styles.primaryBtn}>
+          <MaterialIcons name="receipt-long" size={20} color="#fff" />
+          <Text style={styles.primaryText}>Download Invoice</Text>
+        </Pressable>
+
+        <Pressable style={styles.secondaryBtn} onPress={goBack}>
+          <Text style={styles.secondaryText}>Back to Jobs</Text>
+        </Pressable>
+      </ScrollView>
+    </View>
+  );
+}
+
+/* STYLES */
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#F6F6F8" },
+
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: "#fff",
+    gap: 10,
+  },
+
+  headerTitle: { fontSize: 18, fontWeight: "bold" },
+
+  cardCenter: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 16,
+    alignItems: "center",
+    marginBottom: 15,
+  },
+
+  iconCircle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: "#E8E7FF",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+
+  title: { fontSize: 20, fontWeight: "bold" },
+  sub: { color: "#777", marginBottom: 10 },
+
+  paidBadge: {
+    backgroundColor: "#d1fae5",
+    paddingHorizontal: 15,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+
+  paidText: { color: "#059669", fontWeight: "bold" },
+
+  card: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 15,
+  },
+
+  sectionTitle: { fontWeight: "bold", marginBottom: 10 },
+
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+
+  label: { color: "#777" },
+
+  totalRow: {
+    marginTop: 10,
+    borderTopWidth: 1,
+    borderStyle: "dashed",
+    paddingTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  totalText: { fontWeight: "bold" },
+  totalPrice: { fontWeight: "bold", fontSize: 18, color: "#1e1d72" },
+
+  note: {
+    flexDirection: "row",
+    gap: 10,
+    backgroundColor: "#EEF2FF",
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 20,
+  },
+
+  noteTitle: { fontWeight: "bold", color: "#1e1d72" },
+  noteText: { fontSize: 12, color: "#555" },
+
+  primaryBtn: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 6,
+    backgroundColor: "#1e1d72",
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 10,
+  },
+
+  primaryText: { color: "#fff", fontWeight: "bold" },
+
+  secondaryBtn: {
+    padding: 15,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    alignItems: "center",
+  },
+
+  secondaryText: { fontWeight: "bold" },
+});
